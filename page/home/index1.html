@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Watch App</title>
+    <style>
+      body {
+        background-color: black;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .watch {
+        background-color: white;
+        border-radius: 50%;
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        position: relative;
+      }
+      .watch .watch-face {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .watch .watch-face .time {
+        font-size: 3rem;
+        color: black;
+      }
+      .watch .watch-face .date {
+        font-size: 1.5rem;
+        color: grey;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="watch">
+      <div class="watch-face">
+        <div class="time">00:00</div>
+        <div class="date">Mon, 01 Jan 2000</div>
+      </div>
+    </div>
+    <script src="index.page.js"></script>
+  </body>
+</html>
