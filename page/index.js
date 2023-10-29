@@ -67,8 +67,8 @@ if (gender === GENDER_MALE) {
 }
 
 //getting info of height and weight
-userHeight = height;
-userWeight = weight;
+userHeight = Number(height.toFixed(2));
+userWeight = Number(weight.toFixed(1));
 
 //getting  info on sleep
 const sleep = new Sleep();
@@ -98,15 +98,14 @@ Page({
         userAge +
         "\n Gender: " +
         userGender +
-        "\n Height: " +
+        "\n Height (m): " +
         userHeight +
-        "\n Weight: " +
+        "\n Weight (kg): " +
         userWeight +
-        "\n Heart rate: " +
+        "\n Heart rate (bpm): " +
         lastValueHeartRate +
-        "\n Sleep time: " +
-        userSleepTime / 60 +
-        " hours ",
+        "\n Sleep time (hours): " +
+        userSleepTime / 60,
     });
 
     //function to change the position of the text when there is a click on the screen
@@ -117,6 +116,7 @@ Page({
       });*
     });*/
 
+    /*
     const textWithFont = createWidget(widget.TEXT, {
       x: 96,
       y: 300,
@@ -129,6 +129,7 @@ Page({
       text_style: text_style.NONE,
       font: "fonts/custom.ttf",
       text_i18n: {},
-    });
+      
+    });*/
   },
 });
