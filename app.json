@@ -10,7 +10,7 @@
     },
     "icon": "icon.png",
     "vender": "zepp",
-    "description": "empty application"
+    "description": "CaffeineAI"
   },
   "permissions": [
     "data:user.hd.heart_rate",
@@ -28,7 +28,16 @@
     "default": {
       "module": {
         "page": {
-          "pages": ["page/index"]
+          "pages": [
+            "page/questions",
+            "page/question1",
+            "page/question2",
+            "page/question3",
+            "page/question4",
+            "page/question5",
+            "page/index",
+            "page/stats"
+          ]
         },
         "app-side": {
           "path": "app-side/index"

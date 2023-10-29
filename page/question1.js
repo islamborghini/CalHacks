@@ -10,7 +10,7 @@ Page({
     const text = createWidget(widget.TEXT, {
       //setting the text style and position
       x: 50,
-      y: 10,
+      y: -50,
       w: 400,
       h: 400,
       color: 0xffffff,
@@ -18,13 +18,26 @@ Page({
       align_h: align.CENTER_H,
       align_v: align.CENTER_V,
       text_style: text_style.NONE,
-
       //editing the text value
-      text: "Welcome to your\n caffeine advisor",
+      text: "What brings\n you here?",
     });
-    setInterval(function () {
+    const text2 = createWidget(widget.TEXT, {
+      //setting the text style and position
+      x: 50,
+      y: 100,
+      w: 400,
+      h: 400,
+      color: 0xffffff,
+      text_size: 26,
+      align_h: align.CENTER_H,
+      align_v: align.CENTER_V,
+      text_style: text_style.NONE,
+      //editing the text value
+      text: '"I love coffee. But, I feel \nI am drinking too much"',
+    });
+    setTimeout(function () {
       push({
-        url: "page/question1",
+        url: "page/question2",
         params: "type=1",
       });
     }, delayInMilliseconds);
