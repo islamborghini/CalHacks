@@ -177,71 +177,174 @@
 // )
 // Your Home Page with the Coffee Icon
 // Your Home Page with the Coffee Icon
-
-document.getElementById('coffeeIcon').addEventListener('click', function() {
-    window.location.href = "focusPage.html";
-   });
+class MainScreen extends React.Component {
+    render() {
+       return (
+         <div>
+           <h1>Want to focus?</h1>
+           <button onClick={this.handleStartNow}>Start Now</button>
+           <button onClick={this.handleSchedule}>Schedule</button>
+         </div>
+       );
+    }
    
-   // Your Focus Page
+    handleStartNow = () => {
+       this.props.navigation.navigate("SetDuration");
+    };
    
-   document.getElementById('startNow').addEventListener('click', function() {
-    window.location.href = "setDurationPage.html";
-   });
-   
-   document.getElementById('schedule').addEventListener('click', function() {
-    window.location.href = "setTimePage.html";
-   });
-   
-   // Your Set Duration Page
-   
-   document.getElementById('confirm').addEventListener('click', function() {
-    var selectedDuration = document.getElementById('durationDropdown').value;
-    var beverageOrFood = "beverage";
-    window.location.href = `selectionPage.html?selectedDuration=${selectedDuration}&beverageOrFood=${beverageOrFood}`;
-   });
-   
-   // Your Set Time Page
-   
-   document.getElementById('confirm').addEventListener('click', function() {
-    var selectedTime = document.getElementById('timeInput').value;
-    var beverageOrFood = "beverage";
-    window.location.href = `selectionPage.html?selectedTime=${selectedTime}&beverageOrFood=${beverageOrFood}`;
-   });
-   
-   // Your Selection Page
-   
-   document.getElementById('beverage').addEventListener('click', function() {
-    window.location.href = "caffeinatedBeveragesPage.html";
-   });
-   
-   document.getElementById('food').addEventListener('click', function() {
-    window.location.href = "caffeinatedFoodPage.html";
-   });
-   
-   // Your Caffeinated Beverages Page
-   
-   document.getElementById('coffee').addEventListener('click', function() {
-    var coffeePhoto = "coffeePhoto.jpg";
-    var coffeeIntakeValue = 200;
-    var coffeeIntakeUnit = "mg";
-    window.location.href = `finalPage.html?coffeePhoto=${coffeePhoto}&coffeeIntakeValue=${coffeeIntakeValue}&coffeeIntakeUnit=${coffeeIntakeUnit}`;
-   });
-   
-   // Your Caffeinated Food Page
-   
-   document.getElementById('espresso').addEventListener('click', function() {
-    var espressoPhoto = "espressoPhoto.jpg";
-    var espressoIntakeValue = 70;
-    var espressoIntakeUnit = "mg";
-    window.location.href = `finalPage.html?espressoPhoto=${espressoPhoto}&espressoIntakeValue=${espressoIntakeValue}&espressoIntakeUnit=${espressoIntakeUnit}`;
-   });
-   
-   // Your Final Page
-   
-   window.onload = function() {
-    var coffeePhoto = new URLSearchParams(window.location.search).get('coffeePhoto');
-    var coffeeIntakeValue = new URLSearchParams(window.location.search).get('coffeeIntakeValue');
-    var coffeeIntakeUnit = new URLSearchParams(window.location.search).get('coffeeIntakeUnit');
-    
-    // Update your photo, intake value, and intake unit here
+    handleSchedule = () => {
+       this.props.navigation.navigate("SetTime");
+    };
    }
+   class SetDurationScreen extends React.Component {
+    state = {
+       duration: 0,
+    };
+   
+    handleChange = (event) => {
+       this.setState({ duration: parseInt(event.target.value) });
+    };
+   
+    handleSubmit = () => {
+       this.props.navigation.navigate("CaffeineSelection", { duration: this.state.duration });
+    };
+   
+    render() {
+       return (
+         <div>
+           <h1>Set Duration</h1>
+           <input type="number" onChange={this.handleChange} />
+           <button onClick={this.handleSubmit}>Confirm</button>
+         </div>
+       );
+    }
+   }
+   class SetTimeScreen extends React.Component {
+    state = {
+       time: "",
+    };
+   
+    handleChange = (event) => {
+       this.setState({ time: event.target.value });
+    };
+   
+    handleSubmit = () => {
+       this.props.navigation.navigate("CaffeineSelection", { time: this.state.time });
+    };
+   
+    render() {
+       return (
+         <div>
+           <h1>Set Time</h1>
+           <input type="time" onChange={this.handleChange} />
+           <button onClick={this.handleSubmit}>Confirm</button>
+         </div>
+       );
+    }
+   }
+   class CaffeineSelectionScreen extends React.Component {
+    state = {
+       selection: "",
+    };
+   
+    handleChange = (event) => {
+       this.setState({ selection: event.target.value });
+    };
+   
+    handleSubmit = () => {
+       const { duration, time } = this.props.route.params;
+       const path = this.state.selection === "beverage" ? "BeverageSelection" : "FoodSelection";
+       this.props.navigation.navigate(path, { duration, time });
+    };
+   
+    render() {
+       return (
+         <div>
+           <h1>Choose your intake</h1>
+           <select onChange={this.handleChange}>
+             <option value="">Select...</option>
+             <option value="beverage">Beverage</option>
+             <option value="food">Food</option>
+           </select>
+           <button onClick={this.handleSubmit}>Confirm</button>
+         </div>
+       );
+    }
+   }
+   class BeverageSelectionScreen extends React.Component {
+    state = {
+       selectedBeverage: "",
+    };
+   
+    handleChange = (event) => {
+       this.setState({ selectedBeverage: event.target.value });
+    };
+   
+    handleSubmit = () => {
+       const { duration, time } = this.props.route.params;
+       this.props.navigation.navigate("FinalScreen", { duration, time, selectedBeverage: this.state.selectedBeverage });
+    };
+   
+    render() {
+       return (
+         <div>
+           <h1>Select a beverage</h1>
+           <select onChange={this.handleChange}>
+             {caffeinated_beverages.map((beverage) => (
+               <option key={beverage.id} value={beverage.id}>
+                 {beverage.name}
+               </option>
+             ))}
+           </select>
+           <button onClick={this.handleSubmit}>Confirm</button>
+         </div>
+       );
+    }
+   }
+   class FoodSelectionScreen extends React.Component {
+    state = {
+       selectedFood: "",
+    };
+   
+    handleChange = (event) => {
+       this.setState({ selectedFood: event.target.value });
+    };
+   
+    handleSubmit = () => {
+       const { duration, time } = this.props.route.params;
+       this.props.navigation.navigate("FinalScreen", { duration, time, selectedFood: this.state.selectedFood });
+    };
+   
+    render() {
+       return (
+         <div>
+           <h1>Select a food</h1>
+           <select onChange={this.handleChange}>
+             {caffeinated_foods.map((food) => (
+               <option key={food.id} value={food.id}>
+                 {food.name}
+               </option>
+             ))}
+           </select>
+           <button onClick={this.handleSubmit}>Confirm</button>
+         </div>
+       );
+    }
+   }
+   class FinalScreen extends React.Component {
+    render() {
+       const { duration, time, selectedBeverage, selectedFood } = this.props.route.params;
+   
+       return (
+         <div>
+           <h1>Confirmation</h1>
+           <p>
+             Duration: {duration} minutes, Scheduled Time: {time}
+           </p>
+           <p>Selected: {selectedBeverage || selectedFood}</p>
+           <button onClick={this.handleSubmit}>Start</button>
+         </div>
+       );
+    }
+   }
+   
